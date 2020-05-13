@@ -1,1 +1,15 @@
-<p>graphics1 works!</p>
+<div class="row">
+    <div class="col-6" *ngFor="let key of keys">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{ graficos[key].leyenda }}</h4>
+
+                <app-grafico-dona
+                    [data]="graficos[key].data"
+                    [labels]="graficos[key].labels"
+                    [type]="graficos[key].type"
+                ></app-grafico-dona>
+            </div>
+        </div>
+    </div>
+</div>
