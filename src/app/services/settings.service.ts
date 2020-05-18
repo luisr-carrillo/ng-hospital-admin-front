@@ -15,14 +15,13 @@ export class SettingsService {
     }
 
     guardarAjustes(): void {
-        console.log('Tema guardado en localStorage');
-
+        // console.log('Tema guardado en localStorage');
         localStorage.setItem('ajustes', JSON.stringify(this.ajustes));
     }
 
     cargarAjustes(): void {
         if (localStorage.getItem('ajustes')) {
-            console.log('El tema ha sido cargado desde localStorage');
+            // console.log('El tema ha sido cargado desde localStorage');
             this.ajustes = JSON.parse(localStorage.getItem('ajustes'));
         }
         this.aplicarTema(this.ajustes.tema);
