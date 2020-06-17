@@ -38,14 +38,6 @@ export class RegisterComponent implements OnInit {
                 validators: this.valoresIguales('password', 'passwordValid'),
             }
         );
-
-        this.forma.setValue({
-            nombre: 'Test1',
-            email: 'test1@mail.com',
-            password: 'mail123',
-            passwordValid: 'mail123',
-            tyc: true,
-        });
     }
 
     valoresIguales(campo1: string, campo2: string) {

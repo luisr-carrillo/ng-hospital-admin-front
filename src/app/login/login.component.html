@@ -8,7 +8,9 @@
             <form
                 class="form-horizontal form-material"
                 id="loginform"
-                action="index.html"
+                #F="ngForm"
+                ngNativeValidate
+                (ngSubmit)="ingresar(F)"
             >
                 <a href="javascript:void(0)" class="text-center db"
                     ><img
@@ -21,9 +23,11 @@
                     <div class="col-xs-12">
                         <input
                             class="form-control"
-                            type="text"
-                            required=""
-                            placeholder="Usuario"
+                            type="email"
+                            name="email"
+                            placeholder="Correo eletrónico"
+                            required
+                            [ngModel]="email"
                         />
                     </div>
                 </div>
@@ -32,8 +36,10 @@
                         <input
                             class="form-control"
                             type="password"
-                            required=""
+                            name="password"
                             placeholder="Contraseña"
+                            required
+                            ngModel
                         />
                     </div>
                 </div>
@@ -43,7 +49,9 @@
                             <input
                                 id="checkbox-signup"
                                 type="checkbox"
+                                name="recordar"
                                 class="filled-in chk-col-light-blue"
+                                [(ngModel)]="recordar"
                             />
                             <label for="checkbox-signup"> Recordar </label>
                         </div>
@@ -61,7 +69,6 @@
                         <button
                             class="btn btn-info btn-lg btn-block text-uppercase btn-rounded"
                             type="submit"
-                            (click)="ingresar()"
                         >
                             Ingresar
                         </button>
@@ -101,10 +108,11 @@
                     <div class="col-sm-12 text-center">
                         ¿Aún no tienes una cuenta?
                         <a
-                            href="pages-register2.html"
-                            class="text-primary m-l-5"
-                            ><b>Registrate aquí</b></a
+                            routerLink="/register"
+                            class="text-primary m-l-5 d-block"
                         >
+                            <b>Registrate aquí</b>
+                        </a>
                     </div>
                 </div>
             </form>
