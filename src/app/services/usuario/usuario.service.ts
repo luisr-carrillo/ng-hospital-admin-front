@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
@@ -28,6 +28,34 @@ export class UsuarioService {
                         `El usuario con email: "${res.usuario.email}" ha sido creado exitosamente.`,
                         'success'
                     );
+                })
+            );
+    }
+
+    actualizarUsuario(usuario: Usuario) {
+        let params = new HttpParams();
+        params = params.set('token', this.token);
+
+        return this.http
+            .put(
+                `${environment.URL_SERVICIOS}/usuario/${this.usuario._id}`,
+                usuario,
+                { params }
+            )
+            .pipe(
+                map((res: any) => {
+                    this.guardarLocalStorage(
+                        res.usuario._id,
+                        this.token,
+                        res.usuario
+                    );
+                    Swal.fire(
+                        'Usuario actualizado',
+                        `El usuario con email: "${res.usuario.email}" ha sido actualizado exitosamente.`,
+                        'success'
+                    );
+
+                    return true;
                 })
             );
     }
