@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { Usuario } from 'src/app/models/usuario.model';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
 
 @Injectable({
     providedIn: 'root',
@@ -14,7 +15,11 @@ export class UsuarioService {
     usuario: Usuario;
     token: string;
 
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(
+        private http: HttpClient,
+        private router: Router,
+        private archivoService: SubirArchivoService
+    ) {
         this.cargarLocalStorage();
     }
 
@@ -57,6 +62,27 @@ export class UsuarioService {
 
                     return true;
                 })
+            );
+    }
+
+    actualizarImagen(archivos: File, id: string) {
+        return this.archivoService
+            .subirArchivos(archivos, 'usuarios', id)
+            .then((res: any) => {
+                this.usuario.img = res.usuario.img;
+                this.guardarLocalStorage(
+                    res.usuario._id,
+                    this.token,
+                    this.usuario
+                );
+                Swal.fire(
+                    'Imagen actualizada',
+                    `La iamgen del usuario con email: "${res.usuario.email}" ha sido actualizada exitosamente.`,
+                    'success'
+                );
+            })
+            .catch((err: any) =>
+                console.error('UsuarioService | actualizarImagen():', err)
             );
     }
 
