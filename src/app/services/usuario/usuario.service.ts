@@ -23,6 +23,19 @@ export class UsuarioService {
         this.cargarLocalStorage();
     }
 
+    obtenerUsuarios(desde: number = 0) {
+        return this.http.get(
+            `${environment.URL_SERVICIOS}/usuario?desde=${desde}`
+        );
+    }
+    buscarUsuario(termino: string) {
+        return this.http
+            .get(
+                `${environment.URL_SERVICIOS}/busqueda/coleccion/usuarios/${termino}`
+            )
+            .pipe(map((res: any) => res.usuarios));
+    }
+
     crearUsuario(usuario: Usuario) {
         return this.http
             .post(`${environment.URL_SERVICIOS}/usuario`, usuario)
@@ -43,23 +56,46 @@ export class UsuarioService {
 
         return this.http
             .put(
-                `${environment.URL_SERVICIOS}/usuario/${this.usuario._id}`,
+                `${environment.URL_SERVICIOS}/usuario/${usuario._id}`,
                 usuario,
                 { params }
             )
             .pipe(
                 map((res: any) => {
-                    this.guardarLocalStorage(
-                        res.usuario._id,
-                        this.token,
-                        res.usuario
-                    );
+                    if (usuario._id === this.usuario._id) {
+                        this.guardarLocalStorage(
+                            res.usuario._id,
+                            this.token,
+                            res.usuario
+                        );
+                    }
+
                     Swal.fire(
                         'Usuario actualizado',
                         `El usuario con email: "${res.usuario.email}" ha sido actualizado exitosamente.`,
                         'success'
                     );
 
+                    return true;
+                })
+            );
+    }
+
+    eliminarUsuario(id: string) {
+        let params = new HttpParams();
+        params = params.set('token', this.token);
+
+        return this.http
+            .delete(`${environment.URL_SERVICIOS}/usuario/${id}`, {
+                params,
+            })
+            .pipe(
+                map((res: any) => {
+                    Swal.fire(
+                        'Usuario eliminado',
+                        `El usuario "${res.usuario.email}" ha sido eliminado exitosamente.`,
+                        'success'
+                    );
                     return true;
                 })
             );

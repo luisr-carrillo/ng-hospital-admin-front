@@ -1,0 +1,62 @@
+<div
+    class="modal fade"
+    id="modalUpload"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalUploadLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalUploadLabel">
+                    Imagen de Usuario
+                </h5>
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">
+                    <img
+                        *ngIf="!imagenTemp"
+                        class="w-25"
+                        [src]="imagenUsuario | imagen"
+                    />
+                    <img *ngIf="imagenTemp" class="w-25" [src]="imagenTemp" />
+                </p>
+
+                <input
+                    #input
+                    type="file"
+                    (change)="seleccionImagen($event.target.files[0])"
+                />
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    (click)="cerrarModal()"
+                >
+                    Cerrar
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="subirImagen()"
+                    [disabled]="!imagenSubir"
+                    [ngStyle]="{
+                        cursor: !imagenSubir ? 'not-allowed' : 'pointer'
+                    }"
+                >
+                    Guardar cambios
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
