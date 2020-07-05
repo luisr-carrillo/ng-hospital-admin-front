@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
     name: 'imagen',
 })
 export class ImagenPipe implements PipeTransform {
-    transform(img: string, tipo: string = 'usuario'): unknown {
+    transform(img: string, tipo: string = 'usuarios'): unknown {
         const url = `${environment.URL_SERVICIOS}/img`;
 
         if (!img) {
@@ -17,7 +17,7 @@ export class ImagenPipe implements PipeTransform {
         }
 
         switch (tipo) {
-            case 'usuario':
+            case 'usuarios':
                 return `${url}/usuarios/${img}`;
 
             case 'medico':

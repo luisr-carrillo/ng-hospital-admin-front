@@ -7,7 +7,7 @@ export class ModalUploadService {
     tipo: string;
     id: string;
     notificacion = new EventEmitter<any>();
-    imagenUsuario = new EventEmitter<any>();
+    imagenPreview = new EventEmitter<any>();
 
     constructor() {}
 

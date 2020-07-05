@@ -132,7 +132,7 @@ export class HospitalesComponent implements OnInit {
 
     cambiarImagen(hospital: Hospital) {
         this.modalUploadService.mostrarModal('hospitales', hospital._id);
-        this.modalUploadService.imagenUsuario.emit(hospital.img);
+        this.modalUploadService.imagenPreview.emit(hospital.img);
         $('#modalUpload').modal('show');
     }
 }

@@ -3,8 +3,6 @@ import {
     OnInit,
     ViewChild,
     ElementRef,
-    AfterViewInit,
-    OnChanges,
 } from '@angular/core';
 import Swal from 'sweetalert2';
 import { SubirArchivoService } from 'src/app/services/subir-archivo/subir-archivo.service';
@@ -20,15 +18,15 @@ export class ModalUploadComponent implements OnInit {
     @ViewChild('input') inputElement: ElementRef;
     imagenSubir: File;
     imagenTemp: string | ArrayBuffer;
-    imagenUsuario: string;
+    imagenPreviewUrl: string;
 
     constructor(
         private subirArchivoService: SubirArchivoService,
         public modalUploadService: ModalUploadService
     ) {}
     ngOnInit(): void {
-        this.modalUploadService.imagenUsuario.subscribe((res: any) => {
-            this.imagenUsuario = res;
+        this.modalUploadService.imagenPreview.subscribe((res: any) => {
+            this.imagenPreviewUrl = res;
         });
     }
 
