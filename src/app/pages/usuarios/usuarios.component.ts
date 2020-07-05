@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Usuario } from 'src/app/models/usuario.model';
-import { UsuarioService } from 'src/app/services/usuario/usuario.service';
+import {Component, OnInit} from '@angular/core';
+import {Usuario} from 'src/app/models/usuario.model';
+import {UsuarioService} from 'src/app/services/usuario/usuario.service';
 import Swal from 'sweetalert2';
-import { ModalUploadService } from 'src/app/components/modal-upload/modal-upload.service';
+import {ModalUploadService} from 'src/app/components/modal-upload/modal-upload.service';
 
 declare const $: any;
 
@@ -20,13 +20,15 @@ export class UsuariosComponent implements OnInit {
     constructor(
         private usuarioService: UsuarioService,
         private modalUploadService: ModalUploadService
-    ) {}
+    ) {
+    }
 
     ngOnInit(): void {
         this.cargarUsuarios();
         this.modalUploadService.notificacion.subscribe((res: any) => {
             this.cargarUsuarios();
         });
+
     }
 
     cargarUsuarios(): void {
@@ -76,6 +78,7 @@ export class UsuariosComponent implements OnInit {
     guardarUsuario(usuario: Usuario) {
         this.usuarioService.actualizarUsuario(usuario).subscribe();
     }
+
     borrarUsuario(usuario: Usuario) {
         if (usuario._id === this.usuarioService.usuario._id) {
             Swal.fire(

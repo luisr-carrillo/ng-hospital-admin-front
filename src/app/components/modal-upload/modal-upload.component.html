@@ -10,7 +10,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalUploadLabel">
-                    Imagen de Usuario
+                    Preview de imagen
                 </h5>
                 <button
                     type="button"
@@ -26,7 +26,7 @@
                     <img
                         *ngIf="!imagenTemp"
                         class="w-25"
-                        [src]="imagenUsuario | imagen"
+                        [src]="imagenUsuario | imagen: modalUploadService.tipo"
                     />
                     <img *ngIf="imagenTemp" class="w-25" [src]="imagenTemp" />
                 </p>

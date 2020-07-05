@@ -1,0 +1,125 @@
+<div class="row animate__animated animate__fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Buscar hospitales"
+                    #input
+                    (keyup)="buscarHospital(input.value)"
+                />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animate__animated animate__fadeIn" *ngIf="cargando">
+    <div class="col-12 d-flex justify-content-center">
+        <div class="alert alert-warning text-center">
+            <i class="fa fa-refresh fa-spin fa-2x"></i>
+            <p class="mt-3"><strong>Cargando...</strong></p>
+        </div>
+    </div>
+</div>
+
+<div class="row animate__animated animate__fadeIn" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <h3 class="card-title">
+                        Hospitales registrados (<small>
+                            {{ totalRegistros }} </small
+                        >)
+                    </h3>
+                    <button
+                        class="btn btn-primary btn-rounded"
+                        (click)="agregarHospital()"
+                    >
+                        <i class="fa fa-plus"></i>
+                        Crear hospital
+                    </button>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Hospital</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let hospital of hospitales">
+                            <th style="width: 60px;">
+                                <div
+                                    class="w-100"
+                                    role="button"
+                                    style="cursor: pointer;"
+                                    (click)="cambiarImagen(hospital)"
+                                >
+                                    <img
+                                        [src]="
+                                            hospital.img | imagen: 'hospitales'
+                                        "
+                                        alt="Imagen de hospital"
+                                        class="img-fluid"
+                                    />
+                                </div>
+                            </th>
+                            <th>
+                                <input
+                                    type="text"
+                                    name="hospital"
+                                    class="form-control"
+                                    placeholder="Nombre de hospital"
+                                    required
+                                    [ngModel]="hospital.nombre"
+                                    #hospitalNombre
+                                />
+                            </th>
+                            <th class="d-flex justify-content-center">
+                                <button
+                                    class="btn btn-primary mr-3"
+                                    [disabled]="
+                                        hospital.nombre === hospitalNombre.value
+                                    "
+                                    [ngStyle]="{
+                                        cursor:
+                                            hospital.nombre ===
+                                            hospitalNombre.value
+                                                ? 'not-allowed'
+                                                : 'pointer'
+                                    }"
+                                    (click)="
+                                        guardarHospital(
+                                            hospital,
+                                            hospitalNombre.value
+                                        )
+                                    "
+                                >
+                                    <i class="fa fa-save"></i>
+                                </button>
+                                <button
+                                    class="btn btn-danger"
+                                    (click)="borrarHospital(hospital)"
+                                >
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <button
+                    (click)="cambiarDesde(-5)"
+                    class="btn btn-secondary mr-3"
+                >
+                    Anteriores
+                </button>
+                <button (click)="cambiarDesde(5)" class="btn btn-secondary">
+                    Siguientes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
