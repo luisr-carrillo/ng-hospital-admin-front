@@ -25,6 +25,40 @@ export class UsuarioService {
         this.cargarLocalStorage();
     }
 
+    renuevaToken() {
+        let params = new HttpParams();
+        params = params.set('token', this.token);
+
+        return this.http
+            .get(`${environment.URL_SERVICIOS}/login/renuevatoken`, { params })
+            .pipe(
+                map(
+                    (res: any) => {
+                        this.token = res.token;
+                        this.guardarLocalStorage(
+                            this.usuario._id,
+                            this.token,
+                            this.usuario,
+                            this.menu
+                        );
+
+                        return true;
+                    },
+                    catchError((err: any) => {
+                        this.router.navigate(['/login']);
+
+                        Swal.fire(
+                            `Oops... Error ${err.status}`,
+                            'No se pudo autenticar correctamente',
+                            'error'
+                        );
+
+                        return throwError(err);
+                    })
+                )
+            );
+    }
+
     obtenerUsuarios(desde: number = 0) {
         return this.http.get(
             `${environment.URL_SERVICIOS}/usuario?desde=${desde}`

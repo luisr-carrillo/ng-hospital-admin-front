@@ -11,15 +11,23 @@ import { RegisterComponent } from './login/register.component';
 
 // Modulos
 import { PagesModule } from './pages/pages.module';
+import { PagesComponent } from './pages/pages.component';
+import { SharedModule } from './shared/shared.module';
 @NgModule({
-    declarations: [AppComponent, LoginComponent, RegisterComponent],
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        RegisterComponent,
+        PagesComponent,
+    ],
     imports: [
         BrowserModule,
-        PagesModule,
+        // PagesModule,
         FormsModule,
         ReactiveFormsModule,
         AppRoutingModule,
         HttpClientModule,
+        SharedModule
     ],
     providers: [],
     bootstrap: [AppComponent],
