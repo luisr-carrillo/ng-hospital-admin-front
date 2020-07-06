@@ -14,6 +14,7 @@ import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
 export class UsuarioService {
     usuario: Usuario;
     token: string;
+    menu: any[] = [];
 
     constructor(
         private http: HttpClient,
@@ -66,7 +67,8 @@ export class UsuarioService {
                         this.guardarLocalStorage(
                             res.usuario._id,
                             this.token,
-                            res.usuario
+                            res.usuario,
+                            this.menu
                         );
                     }
 
@@ -109,7 +111,8 @@ export class UsuarioService {
                 this.guardarLocalStorage(
                     res.usuario._id,
                     this.token,
-                    this.usuario
+                    this.usuario,
+                    this.menu
                 );
                 Swal.fire(
                     'Imagen actualizada',
@@ -133,7 +136,12 @@ export class UsuarioService {
             .post(`${environment.URL_SERVICIOS}/login`, usuario)
             .pipe(
                 map((res: any) => {
-                    this.guardarLocalStorage(res.id, res.token, res.usuario);
+                    this.guardarLocalStorage(
+                        res.id,
+                        res.token,
+                        res.usuario,
+                        res.menu
+                    );
                     return true;
                 })
             );
@@ -146,7 +154,12 @@ export class UsuarioService {
             })
             .pipe(
                 map((res: any) => {
-                    this.guardarLocalStorage(res.id, res.token, res.usuario);
+                    this.guardarLocalStorage(
+                        res.id,
+                        res.token,
+                        res.usuario,
+                        res.menu
+                    );
                     return true;
                 })
             );
@@ -155,9 +168,11 @@ export class UsuarioService {
     logout() {
         this.token = '';
         this.usuario = null;
+        this.menu = [];
         localStorage.removeItem('ngHospitalId');
         localStorage.removeItem('ngHospitalToken');
         localStorage.removeItem('ngHospitalUsuario');
+        localStorage.removeItem('ngHospitalMenu');
 
         this.router.navigate(['/login']);
     }
@@ -172,17 +187,26 @@ export class UsuarioService {
             this.usuario = JSON.parse(
                 localStorage.getItem('ngHospitalUsuario')
             );
+            this.menu = JSON.parse(localStorage.getItem('ngHospitalMenu'));
         } else {
             this.token = '';
             this.usuario = null;
+            this.menu = [];
         }
     }
-    private guardarLocalStorage(id: string, token: string, usuario: Usuario) {
+    private guardarLocalStorage(
+        id: string,
+        token: string,
+        usuario: Usuario,
+        menu: any
+    ) {
         localStorage.setItem('ngHospitalId', id);
         localStorage.setItem('ngHospitalToken', token);
         localStorage.setItem('ngHospitalUsuario', JSON.stringify(usuario));
+        localStorage.setItem('ngHospitalMenu', JSON.stringify(menu));
 
         this.usuario = usuario;
         this.token = token;
+        this.menu = menu;
     }
 }

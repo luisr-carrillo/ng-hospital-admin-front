@@ -7,19 +7,20 @@ import { NgModule } from '@angular/core';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
-import { LoginGuardGuard } from '../services/guards/login-guard.guard';
+import { LoginGuard } from '../services/guards/login-guard.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { HospitalesComponent } from './hospitales/hospitales.component';
 import { MedicosComponent } from './medicos/medicos.component';
 import { MedicoComponent } from './medicos/medico.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
+import { AdminGuard } from '../services/guards/admin.guard';
 
 const pagesRoutes: Routes = [
     {
         path: '',
         component: PagesComponent,
-        canActivate: [LoginGuardGuard],
+        canActivate: [LoginGuard],
         children: [
             {
                 path: 'dashboard',
@@ -66,6 +67,7 @@ const pagesRoutes: Routes = [
             {
                 path: 'usuarios',
                 component: UsuariosComponent,
+                canActivate: [AdminGuard],
                 data: { titulo: 'Mantenimiento de Usuarios' },
             },
             {

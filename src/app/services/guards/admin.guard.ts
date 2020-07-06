@@ -5,17 +5,17 @@ import { UsuarioService } from '../usuario/usuario.service';
 @Injectable({
     providedIn: 'root',
 })
-export class LoginGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
     constructor(
         private usuarioService: UsuarioService,
         private router: Router
     ) {}
 
-    canActivate(): boolean {
-        if (this.usuarioService.isLogin()) {
+    canActivate() {
+        if (this.usuarioService.usuario.role === 'ADMIN_ROLE') {
             return true;
         } else {
-            this.router.navigate(['/login']);
+            this.usuarioService.logout();
             return false;
         }
     }
