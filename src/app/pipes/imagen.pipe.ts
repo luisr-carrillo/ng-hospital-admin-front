@@ -20,7 +20,7 @@ export class ImagenPipe implements PipeTransform {
             case 'usuarios':
                 return `${url}/usuarios/${img}`;
 
-            case 'medico':
+            case 'medicos':
                 return `${url}/medicos/${img}`;
 
             case 'hospitales':

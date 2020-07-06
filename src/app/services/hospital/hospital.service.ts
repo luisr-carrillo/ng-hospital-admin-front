@@ -22,7 +22,9 @@ export class HospitalService {
         );
     }
 
-    obtenerHospital(id: string) {}
+    obtenerHospital(id: string) {
+        return this.http.get(`${environment.URL_SERVICIOS}/hospital/${id}`);
+    }
 
     borrarHospital(id: string) {
         let params = new HttpParams();
@@ -96,5 +98,4 @@ export class HospitalService {
             )
             .pipe(map((res: any) => res.hospitales));
     }
-
 }

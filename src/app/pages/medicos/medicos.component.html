@@ -1,0 +1,103 @@
+<div class="row animate__animated animate__fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Buscar medicos"
+                    #input
+                    (keyup)="buscarMedicos(input.value)"
+                />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animate__animated animate__fadeIn" *ngIf="cargando">
+    <div class="col-12 d-flex justify-content-center">
+        <div class="alert alert-warning text-center">
+            <i class="fa fa-refresh fa-spin fa-2x"></i>
+            <p class="mt-3"><strong>Cargando...</strong></p>
+        </div>
+    </div>
+</div>
+
+<div class="row animate__animated animate__fadeIn" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <h3 class="card-title">
+                        Medicos registrados (<small>
+                            {{ totalRegistros }} </small
+                        >)
+                    </h3>
+                    <button
+                        class="btn btn-primary btn-rounded"
+                        [routerLink]="['/medico', 'nuevo']"
+                    >
+                        <i class="fa fa-plus"></i>
+                        Crear medicos
+                    </button>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Medico</th>
+                            <th>Hospital</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let medico of medicos">
+                            <th style="width: 60px;">
+                                <div
+                                    class="w-100"
+                                    role="button"
+                                    style="cursor: pointer;"
+                                >
+                                    <img
+                                        [src]="medico.img | imagen: 'medicos'"
+                                        alt="Imagen de hospital"
+                                        class="img-fluid"
+                                    />
+                                </div>
+                            </th>
+                            <th>
+                                {{ medico.nombre }}
+                            </th>
+                            <th>
+                                {{ medico.hospital["nombre"] }}
+                            </th>
+                            <th class="d-flex justify-content-center">
+                                <button
+                                    class="btn btn-primary mr-3"
+                                    [routerLink]="['/medico', medico._id]"
+                                >
+                                    <i class="fa fa-pencil-square-o"></i>
+                                </button>
+                                <button
+                                    class="btn btn-danger"
+                                    (click)="borrarMedico(medico)"
+                                >
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <button
+                    (click)="cambiarDesde(-5)"
+                    class="btn btn-secondary mr-3"
+                >
+                    Anteriores
+                </button>
+                <button (click)="cambiarDesde(5)" class="btn btn-secondary">
+                    Siguientes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
