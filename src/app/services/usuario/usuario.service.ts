@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { Usuario } from 'src/app/models/usuario.model';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
+import { throwError } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -47,6 +48,14 @@ export class UsuarioService {
                         `El usuario con email: "${res.usuario.email}" ha sido creado exitosamente.`,
                         'success'
                     );
+                }),
+                catchError((err: any) => {
+                    Swal.fire(
+                        `Oops... Error ${err.status}`,
+                        err.error.errores.message,
+                        'error'
+                    );
+                    return throwError(err.message);
                 })
             );
     }
@@ -79,6 +88,16 @@ export class UsuarioService {
                     );
 
                     return true;
+                }),
+                catchError((err: any) => {
+                    console.log('actualizarUsuario()', err);
+
+                    Swal.fire(
+                        `Oops... Error ${err.status}`,
+                        'Hubo un error al actualizar el usuario',
+                        'error'
+                    );
+                    return throwError(err.message);
                 })
             );
     }
@@ -143,6 +162,14 @@ export class UsuarioService {
                         res.menu
                     );
                     return true;
+                }),
+                catchError((err: any) => {
+                    Swal.fire(
+                        `Oops... Error ${err.status}`,
+                        err.error.mensaje,
+                        'error'
+                    );
+                    return throwError(err.message);
                 })
             );
     }
