@@ -13,7 +13,7 @@
   ],
   "main": [
     "./css/font-awesome.css",
-    ".//fonts/*"
+    "./fonts/*"
   ],
   "ignore": [
     "*/.*",
